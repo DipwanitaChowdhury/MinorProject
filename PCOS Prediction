@@ -1,0 +1,16 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+pcos_dataset=pd.read_csv("PCOS_data 2.csv")
+pcos_dataset.head(10)
+pcos_dataset.isnull().sum()
+pcos_dataset= pcos_dataset.dropna()
+pcos_dataset.isnull().sum()
+pcos_dataset.info() 
+X=pcos_dataset.drop(['PCOS (Y/N)','Sl. No'], axis=1)
+Y=pcos_dataset['PCOS (Y/N)']
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
+from sklearn.ensemble import RandomForestClassifier
+model= RandomForestClassifier(n_estimators=50, criterion='entropy', random_state=0)
+model.fit(X_train, Y_train)
